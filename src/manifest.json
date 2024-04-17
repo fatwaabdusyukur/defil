@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "DeFil",
+  "description": "Extension to filter defamation tweets",
+  "version": "1.0",
+  "icons": {
+    "128": "/img/logo.png"
+  },
+  "permissions": ["tabs", "activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["content.bundle.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
