@@ -14,5 +14,11 @@
       "css": ["style.css"],
       "run_at": "document_idle"
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/img/logo.png"],
+      "matches": ["https://twitter.com/*"]
+    }
   ]
 }
