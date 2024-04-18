@@ -10,11 +10,14 @@ function computeSelector(options) {
     else return document.querySelector(selector);
 }
 
-function wrapComponent(component, target, id = ""){
+function wrapComponent(components, target, id = ""){
     const container = document.createElement("div");
     if (id !== "") container.id = id;
     target.appendChild(container);
-    createRoot(container).render(<Provider store={store}>{component}</Provider>);
+    const wrappedComponents = components.map((component, index) => (
+        <React.Fragment key={index}>{component}</React.Fragment>
+      ));
+    createRoot(container).render(<Provider store={store}>{wrappedComponents}</Provider>);
 }
 
 export function injectComponent(options, component) {
@@ -40,4 +43,6 @@ export function injectComponent(options, component) {
     });
 }
 
-export const injectComponentToRoot = (component) => wrapComponent(component, document.body, "defil-extension-container");
+export const injectComponentToRoot = (components) => wrapComponent(components, document.body, "defil-extension-container");
+
+export const getImg = (path) => chrome.runtime.getURL(path);
