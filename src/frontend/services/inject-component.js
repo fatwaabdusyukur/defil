@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { fetchPersonalTweet } from "../components/modal/logic";
+import { openAlert } from "../components/alert/logic";
+import { detectIndonesianLang } from "./language-detection";
 
 function computeSelector(options) {
     const [selector, isArray, childNum] = options;
@@ -45,9 +47,12 @@ export function injectComponent(options, component) {
 }
 
 export function listenContextMenu() {
-    chrome.runtime.onMessage.addListener((msg) => {
-        if (msg.action === 'filterTweet') {
-            store.dispatch(fetchPersonalTweet(msg.value));
+    chrome.runtime.onMessage.addListener((message) => {
+        if (message.action === 'filterTweet') {
+            const tweet = message.value;
+            const { status, msg } = detectIndonesianLang(tweet);
+            if (status) store.dispatch(fetchPersonalTweet(tweet));
+            else store.dispatch(openAlert(msg));
         }
     })
 }

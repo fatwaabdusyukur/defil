@@ -3,11 +3,17 @@ import { useDispatch } from 'react-redux';
 import { fetchPersonalTweet } from './modal/logic.js';
 import { openAlert } from "./alert/logic.js";
 import { getImg } from "../services/inject-component.js";
+import { detectIndonesianLang } from "../services/language-detection.js";
 
 function filterTweet(dispatch){
     const element = document.querySelector('span[data-text="true"]');
-    if(element === null) dispatch(openAlert("Tweet is Empty!"));
-    else dispatch(fetchPersonalTweet(element.textContent));
+    if(element === null) dispatch(openAlert("Tweet masih kosong!"));
+    else {
+        const tweet = element.textContent;
+        const { status, msg } = detectIndonesianLang(tweet);
+        if (status) dispatch(fetchPersonalTweet(tweet));
+        else dispatch(openAlert(msg));
+    };
 }
 
 function PersonalFilterButton() {
