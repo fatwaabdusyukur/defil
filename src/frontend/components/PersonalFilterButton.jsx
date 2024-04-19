@@ -1,14 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setModal } from './modal/logic.js';
-import { setAlert } from "./alert/logic.js";
-import { prep } from "../services/prepocessing.js";
+import { fetchPersonalTweet } from './modal/logic.js';
+import { openAlert } from "./alert/logic.js";
 import { getImg } from "../services/inject-component.js";
 
 function filterTweet(dispatch){
     const element = document.querySelector('span[data-text="true"]');
-    if(element === null) dispatch(setAlert({ status: true, msg: "Tweet is Empty!" }));
-    else dispatch(setModal({ status: true, msg: prep(element.textContent) }));
+    if(element === null) dispatch(openAlert("Tweet is Empty!"));
+    else dispatch(fetchPersonalTweet(element.textContent));
 }
 
 function PersonalFilterButton() {

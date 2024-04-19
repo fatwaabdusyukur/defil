@@ -22,7 +22,7 @@ module.exports = {
   mode: isProduction ? "production" : "development",
   devtool: isProduction ? "source-map" : "cheap-module-source-map",
   entry: {
-    content: resolve(__dirname, "src/content/content.js"),
+    content: resolve(__dirname, "src/frontend/content/content.js"),
   },
   output: {
     path: resolve(__dirname, "dist"),
@@ -52,15 +52,15 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: "src/manifest.json", to: "manifest.json" },
-        { from: "src/assets/img/logo.png", to: "img/logo.png" },
-        { from: "src/assets/css/style.css", to: "style.css" },
+        { from: "src/frontend/manifest.json", to: "manifest.json" },
+        { from: "src/frontend/assets/img/logo.png", to: "img/logo.png" },
+        { from: "src/frontend/assets/css/style.css", to: "style.css" },
       ],
     }),
   ],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
+      "@": resolve(__dirname, "src/frontend"),
     },
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
   },
