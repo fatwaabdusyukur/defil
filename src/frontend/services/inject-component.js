@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { fetchPersonalTweet } from "../components/modal/logic";
 
 function computeSelector(options) {
     const [selector, isArray, childNum] = options;
@@ -41,6 +42,14 @@ export function injectComponent(options, component) {
         childList: true,
         subtree: true,
     });
+}
+
+export function listenContextMenu() {
+    chrome.runtime.onMessage.addListener((msg) => {
+        if (msg.action === 'filterTweet') {
+            store.dispatch(fetchPersonalTweet(msg.value));
+        }
+    })
 }
 
 export const injectComponentToRoot = (components) => wrapComponent(components, document.body, "defil-extension-container");

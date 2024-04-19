@@ -6,7 +6,7 @@
   "icons": {
     "128": "/img/logo.png"
   },
-  "permissions": ["tabs", "activeTab", "storage"],
+  "permissions": ["tabs", "activeTab", "contextMenus"],
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
@@ -15,6 +15,9 @@
       "run_at": "document_idle"
     }
   ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
   "web_accessible_resources": [
     {
       "resources": ["/img/logo.png"],

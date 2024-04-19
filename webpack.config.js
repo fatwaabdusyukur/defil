@@ -23,6 +23,7 @@ module.exports = {
   devtool: isProduction ? "source-map" : "cheap-module-source-map",
   entry: {
     content: resolve(__dirname, "src/frontend/content/content.js"),
+    background: resolve(__dirname, "src/frontend/background/background.js")
   },
   output: {
     path: resolve(__dirname, "dist"),
