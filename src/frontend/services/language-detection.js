@@ -1,4 +1,5 @@
 import { bahasa, latin } from "./language-dict";
+import { prep } from "./prepocessing";
 import { franc } from "franc";
 
 const indonesia = new Set(bahasa());
@@ -6,9 +7,10 @@ const latinDict = latin();
 
 export function detectIndonesianLang(text){
     let result = { status: false, msg: "" };
+    const cleanText = prep(text);
 
-    if (latinDict.includes(franc(text))) {
-        const words = text.toLowerCase().split(/\W+/);
+    if (latinDict.includes(franc(cleanText))) {
+        const words = cleanText.split(/\W+/);
         let countWord = 0;
         words.forEach(word => {
             if (indonesia.has(word)) countWord++;

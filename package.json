@@ -12,7 +12,8 @@
   },
   "scripts": {
     "tailwindcss": "npx tailwindcss -i ./src/frontend/assets/css/index.css -o ./src/frontend/assets/css/style.css",
-    "dev": "npm run tailwindcss && webpack --mode  development --watch"
+    "dev": "npm run tailwindcss && webpack --mode  development --watch",
+    "prod": "webpack --mode production"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +50,7 @@
     "ts-sastrawi": "^1.0.1",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.0.4",
+    "zip-webpack-plugin": "^4.0.1"
   }
 }

@@ -1,6 +1,7 @@
 const { resolve } = require("path");
 const { argv } = require("process");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ZipPlugin = require("zip-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
 const isProduction = argv[3] === "production";
@@ -17,6 +18,26 @@ const fileExtensions = [
   "woff",
   "woff2",
 ];
+
+const plugins = [
+  new CleanWebpackPlugin(),
+  new CopyPlugin({
+    patterns: [
+      { from: "src/frontend/manifest.json", to: "manifest.json" },
+      { from: "src/frontend/assets/img/logo.png", to: "img/logo.png" },
+      { from: "src/frontend/assets/css/style.css", to: "style.css" },
+    ],
+  }),
+];
+
+if (isProduction) {
+  plugins.push(
+    new ZipPlugin({
+      path: resolve(__dirname),
+      filename: "bundle.zip",
+    })
+  );
+}
 
 module.exports = {
   mode: isProduction ? "production" : "development",
@@ -49,16 +70,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: "src/frontend/manifest.json", to: "manifest.json" },
-        { from: "src/frontend/assets/img/logo.png", to: "img/logo.png" },
-        { from: "src/frontend/assets/css/style.css", to: "style.css" },
-      ],
-    }),
-  ],
+  plugins: plugins,
   resolve: {
     alias: {
       "@": resolve(__dirname, "src/frontend"),
